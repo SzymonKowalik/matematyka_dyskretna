@@ -8,12 +8,11 @@ def tablica_prawdy(ile_zmiennych, czy_zanegowane, duplikaty_index):
 		xor = 0
 
 		for i, y in zip(wartosciowanie, duplikaty_index):
-			if not i or not y:
-				continue
-			else:
+			if i and y:
 				xor = xor ^ int(y)
 		wyn.append(xor)
 	return wyn
+
 
 def porownaj(l1, l2, max_zmienionych):
 	counter = 0
@@ -42,61 +41,34 @@ def mozliwosci(ile_zmiennych, przyklad, max_zmienionych):
 		if porownaj(mozliwy_szyfr, przyklad, max_zmienionych):
 			return [1]+curr
 
-def przyklad_lista(przyklad_tekst):
-	return [int(i) for i in przyklad_tekst]
 
 def odkoduj(dlugosc_jednej_wiadomosci, ile_wiadomosci,  max_zmienionych_bitow, przyklady):
 	ile_zmiennych = dlugosc_jednej_wiadomosci - 1
 
 	i = 0
 	while i < ile_wiadomosci:
-		przyklad = przyklad_lista(przyklady[i])
+		przyklad = [int(x) for x in przyklady[i]]
 		print(f"{mozliwosci(ile_zmiennych, przyklad, max_zmienionych_bitow)}")
 		i += 1
 
-def open_file(path):
-	with open(path) as my_file:
+
+def uruchom(sciezka):
+	with open(sciezka) as my_file:
 		t = my_file.read().rstrip().split('\n')
-	t[0] = int(t[0])
-	t[1] = int(t[1])
-	t[2] = int(t[2])
-	return t
-
-
-def z1():
-	t = open_file("messages7.in.txt")
 	przyklady = t[3:]
 
-	dlugosc_wiadomosci = t[0]
-	ile_przykladow = t[1]
-	max_zmienionych_bitow = t[2]
-
-	odkoduj(dlugosc_jednej_wiadomosci=dlugosc_wiadomosci, ile_wiadomosci=ile_przykladow, max_zmienionych_bitow=max_zmienionych_bitow, przyklady=przyklady)
-
-
-def z2():
-	t = open_file("messages13.in.txt")
-	przyklady = t[3:]
-
-	dlugosc_wiadomosci = t[0]
-	ile_przykladow = t[1]
-	max_zmienionych_bitow = t[2]
-
-	odkoduj(dlugosc_jednej_wiadomosci=dlugosc_wiadomosci, ile_wiadomosci=ile_przykladow,
-			max_zmienionych_bitow=max_zmienionych_bitow, przyklady=przyklady)
-
-# Lepiej tego nie testowac (chyba ze nienawidzisz swojego kompa):
-def z3():
-	t = open_file("messages16.in.txt")
-	przyklady = t[3:]
-
-	dlugosc_wiadomosci = t[0]
-	ile_przykladow = t[1]
-	max_zmienionych_bitow = t[2]
+	dlugosc_wiadomosci = int(t[0])
+	ile_przykladow = int(t[1])
+	max_zmienionych_bitow = int(t[2])
 
 	odkoduj(dlugosc_jednej_wiadomosci=dlugosc_wiadomosci, ile_wiadomosci=ile_przykladow,
 			max_zmienionych_bitow=max_zmienionych_bitow, przyklady=przyklady)
 
 
-z1()
-
+if __name__ == '__main__':
+	path1 = "messages7.in.txt"
+	path2 = "messages13.in.txt"
+	path3 = "messages16.in.txt"
+	uruchom(path1)
+	uruchom(path2)
+	uruchom(path3)
